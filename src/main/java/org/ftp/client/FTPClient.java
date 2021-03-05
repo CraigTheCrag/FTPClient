@@ -20,6 +20,11 @@ public class FTPClient {
 
     private static Socket socket;
 
+    /**
+     * Main method
+     * @param args - Indexes: 0 = File to send, 1 = destination ip, 2 = destination port
+     * @throws FTPException thrown if error at any point
+     */
     public static void main(String[] args) throws FTPException{
         if ((args.length > 0) & (args.length < 4)) {
             fileToSend = new File(args[0]);
@@ -35,6 +40,11 @@ public class FTPClient {
         closeSocket();
     }
 
+    /**
+     * Opens <code>Socket</code> to server
+     * @return the <code>Socket</code>
+     * @throws FTPException thrown if error caused while opening <code>Socket</code>
+     */
     private static Socket openSocket() throws FTPException {
         Socket s;
         try {
@@ -47,6 +57,10 @@ public class FTPClient {
         return s;
     }
 
+    /**
+     * Closes <code>Socket</code> to server
+     * @throws FTPException thrown if error caused while closing <code>Socket</code>
+     */
     private static void closeSocket() throws FTPException {
         try {
             socket.close();
@@ -56,6 +70,12 @@ public class FTPClient {
         System.out.printf("Closed Socket: %s:d%n", ip, port);
     }
 
+    /**
+     * Sends data to server over <code>Socket</code> created
+     * @param data - Data to be sent to server over <code>Socket</code>
+     * @throws FTPException thrown if error caused while creating <code>OutputStream</code>, writing <code>Object</code>
+     * to <code>OutputStream</code>, flushing <code>OutputStream</code>, or closing <code>OutputStream</code>
+     */
     private static void sendData(FTPFileData data) throws FTPException {
         ObjectOutputStream outputStream;
         try {
@@ -81,6 +101,10 @@ public class FTPClient {
         System.out.printf("Sent file %s to %s:d%n", fileToSend.getName(), ip, port);
     }
 
+    /**
+     * Creates <code>FTPFileData</code> <code>Object</code> from <code>File</code>
+     * @return newly created <code>FTPFileData</code> <code>Object</code>
+     */
     private static FTPFileData getData() {
         return new FTPFileData(fileToSend);
     }
